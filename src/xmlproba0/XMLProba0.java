@@ -25,7 +25,8 @@ public class XMLProba0 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        conectar("/home/oracle/Desktop/compartido/NetBeansProjects/XMLProba0/proba0.xml");
+        crearXMLEjercicio();
     }
     
     public static void conectar(String ruta){
@@ -39,8 +40,87 @@ public class XMLProba0 {
         }
     }
     
-    public static void CrearXML(){
+    public static void crearXML(String rootElement){
+        try {
+            xmlsw.writeStartDocument("1.0");
+            xmlsw.writeStartElement(rootElement);
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
+    public static void cerrarXML(){
+        try {
+            xmlsw.writeEndDocument();
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void añadirElemento(String nombre){
+        try {
+            xmlsw.writeStartElement(nombre);
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void cerrarElemento(){
+        try {
+            xmlsw.writeEndElement();
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void añadirAtributo(String nombreAtributo, String valor){
+        try {
+            xmlsw.writeAttribute(nombreAtributo, valor);
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void escribirContenido(String contenido){
+        try {
+            xmlsw.writeCharacters(contenido);
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void crearXMLEjercicio(){
+        crearXML("autores");
+        añadirElemento("autor");
+        añadirAtributo("codigo","a1");
+        añadirElemento("nome");
+        escribirContenido("Alexandre Dumas");
+        cerrarElemento();
+        añadirElemento("titulo");
+        escribirContenido("El conde de montecristo");
+        cerrarElemento();
+        añadirElemento("titulo");
+        escribirContenido("Los miserables");
+        cerrarElemento();
+        cerrarElemento();
+        añadirElemento("autor");
+        añadirAtributo("codigo","a2");
+        añadirElemento("nome");
+        escribirContenido("Fiodor Dostoyevski");
+        cerrarElemento();
+        añadirElemento("titulo");
+        escribirContenido("El idiota");
+        cerrarElemento();
+        añadirElemento("titulo");
+        escribirContenido("Noches blancas");
+        cerrarElemento();
+        cerrarElemento();
+        cerrarXML();
+        try {
+            xmlsw.close();
+        } catch (XMLStreamException ex) {
+            Logger.getLogger(XMLProba0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
